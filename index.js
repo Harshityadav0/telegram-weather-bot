@@ -1,10 +1,32 @@
 import Telegraf from "telegraf";
+import express from "express";
+const app = express();
 const { Markup, session, Stage } = Telegraf;
 import WizardScene from "telegraf/scenes/wizard/index.js";
 import { getLattitude, getWeather } from "./utils/weather.js";
 import getDirection from "./utils/direction.js";
 
 const bot = new Telegraf(process.env.BOT_KEY);
+
+let port = process.env.PORT || 3000;
+app.get("/", (req, res) => {
+  try {
+    res.status(200).send(`Nothing to see here`);
+  } catch (e) {
+    res.status(404).send(`OOPS`);
+  }
+});
+app.get("*", (req, res) => {
+  try {
+    res.status(200).send(`Nothing to see here`);
+  } catch (e) {
+    res.status(404).send(`OOPS`);
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Running on ${port}`);
+});
 
 bot.start((ctx) => {
   ctx.reply(
